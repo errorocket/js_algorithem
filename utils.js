@@ -62,7 +62,83 @@ function run({
     }
 }
 
+// 基于权重的并查集
+class UnionFind {
+    constructor(size) {
+        this.size = size;
+        this.parents = new Array(size);
+        this.weight = new Array(size);
+        for(let i = 0; i < size; i++) {
+            this.parents[i] = i;
+            this.weight[i] = 1;
+        }
+    }
+    query(el) {
+        const parents = this.parents;
+        while(el !== parents[el]) {
+            el = parents[el];
+        }
+        return el;
+    }
+    isConnected(el1, el2) {
+        return this.query(el1) === this.query(el2);
+    }
+    merge(e1, e2) {
+        if (!this.isConnected(e1, e2)) {
+            const g1 = this.query(e1);
+            const g2 = this.query(e2);
+            const parents = this.parents;
+            if (this.weight[g1] > this.weight[g2]) {
+                parents[g2] = g1;
+                this.weight[g1]++;
+            } else {
+                parents[g1] = g2;
+                this.weight[g2]++;
+            }
+            this.size--;
+        }
+    }
+    getGroupNum() {
+        return this.size;
+    }
+    toString() {
+        return this.parents.join(' ');
+    }
+    getWeightArr() {
+        return this.weight;
+    }
+    setSize(size) {
+        this.size = size;
+    }
+}
+
+function unionFindTest() {
+    const unionFind = new UnionFind(10);
+    console.log('query: ', unionFind.query(3));
+    console.log('height: ', unionFind.getWeightArr());
+
+    console.log('isConnected: ', unionFind.isConnected(1, 2));
+    unionFind.merge(1, 2);
+    console.log(unionFind.toString(), ' --->size: ', unionFind.getGroupNum());
+    console.log('isConnected: ', unionFind.isConnected(1, 2));
+
+    unionFind.merge(1, 3);
+    console.log(unionFind.toString(), ' --->size: ', unionFind.getGroupNum());
+    console.log('isConnected: ', unionFind.isConnected(1, 3));
+    console.log('isConnected: ', unionFind.isConnected(2, 3));
+
+    unionFind.merge(3, 8);
+    console.log(unionFind.toString(), ' --->size: ', unionFind.getGroupNum());
+    console.log('isConnected: ', unionFind.isConnected(1, 8));
+    console.log('isConnected: ', unionFind.isConnected(2, 8));
+}
+
+// 排序相关工具
 window.swap = swap;
 window.getTestData = getTestData;
 window.shakeData = shakeData;
 window.run = run;
+
+// 并查集相关工具
+window.UnionFind = UnionFind;
+window.unionFindTest = unionFindTest;
