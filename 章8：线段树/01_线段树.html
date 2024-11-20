@@ -80,7 +80,15 @@
                 return this.doRangeQuery(this.root, p1, p2);
             }
             doRangeQuery(node, p1, p2) {
+                if (!node) {
+                    return;
+                }
+                if (node.sumTag) {
+                    // 查询前先更新当前节点的值
+                    this.pushDown(node);
+                }
                 const {start, end, left, right, sum} = node;
+
                 if (start === p1 && end === p2) {
                     return sum;
                 }
@@ -98,32 +106,40 @@
                 this.doRangeUpdate(this.root, left, right, delta);
             }
             doRangeUpdate(node, p1 , p2, delta) {
+                if (!node) {
+                    return;
+                }
+                if (node.sumTag) {
+                    this.pushDown(node);
+                }
                 const {start, end, left, right} = node;
-                if (start === end && start === p1) {
-                    return node.sum += delta;
+                if (start === p1 && end === p2) {
+                    node.sumTag += delta;
+                    return node.sum += (end - start + 1) * delta;
                 }
                 const mid = (start + end) >> 1;
                 if (p2 <= mid) {
-                    return node.sum = this.doRangeUpdate(left, p1, p2, delta) + node.right.sum;
+                    // 递归返回更新后的node.sum是为了及时更新父节点的sum值
+                    return node.sum = (this.doRangeUpdate(left, p1, p2, delta) + node.right.sum);
                 } else if (p1 > mid){
-                    return node.sum = this.doRangeUpdate(right, p1, p2, delta) + node.left.sum;
+                    return node.sum = (this.doRangeUpdate(right, p1, p2, delta) + node.left.sum);
                 } else {
-                    return node.sum = this.doRangeUpdate(left, p1, mid, delta) + this.doRangeUpdate(right, mid + 1, p2, delta);
+                    return node.sum = (this.doRangeUpdate(left, p1, mid, delta) + this.doRangeUpdate(right, mid + 1, p2, delta));
                 }
             }
-            tagPushDown(node) {
-                if (node?.sumTag) {
-                    const {left, right, sumTag} = node;
-                    if (left) {
-                        left.sumTag += sumTag;
-                        left.sum += sumTag;
-                    }
-                    if (right) {
-                        right.sumTag += sumTag;
-                        left.sum += sumTag;
-                    }
-                    node.sumTag = 0;
+            pushDown(node) {
+                const {left, right, sumTag} = node;
+                if (left) {
+                    const {start, end} = left;
+                    left.sumTag += sumTag;
+                    left.sum += (end - start + 1) * sumTag;
                 }
+                if (right) {
+                    const {start, end} = right;
+                    right.sumTag += sumTag;
+                    right.sum += (end - start + 1) * sumTag;
+                }
+                node.sumTag = 0;
             }
         }
         function run() {
@@ -132,7 +148,7 @@
             const segmentTree = new SegmentTree(arr);
 
             // 单点更新
-            segmentTree.update(4, 1);
+            // segmentTree.update(4, 1);
 
             // 单点查询
             // console.log(segmentTree.query(4));
@@ -141,7 +157,7 @@
             // console.log(segmentTree.rangeQuery(0, 8));
 
             // 范围修改
-            // segmentTree.rangeUpdate(3, 5, 0);
+            segmentTree.rangeUpdate(0, 8, 1);
             console.log(segmentTree.rangeQuery(0, 8));
 
             // 输出线段树
