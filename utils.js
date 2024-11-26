@@ -133,6 +133,18 @@ function unionFindTest() {
     console.log('isConnected: ', unionFind.isConnected(2, 8));
 }
 
+function isPalindrome(str, left, right) {
+    while(left < right) {
+        if (str[left] === str[right]) {
+            left++;
+            right--;
+        } else {
+            return false;
+        }
+    }
+    return true;
+}
+
 // 排序相关工具
 window.swap = swap;
 window.getTestData = getTestData;
@@ -142,3 +154,6 @@ window.run = run;
 // 并查集相关工具
 window.UnionFind = UnionFind;
 window.unionFindTest = unionFindTest;
+
+// 回文串相关工具
+window.isPalindrome = isPalindrome;
