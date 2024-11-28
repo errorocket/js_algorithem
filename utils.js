@@ -133,6 +133,7 @@ function unionFindTest() {
     console.log('isConnected: ', unionFind.isConnected(2, 8));
 }
 
+// 是否是回文串
 function isPalindrome(str, left, right) {
     while(left < right) {
         if (str[left] === str[right]) {
@@ -143,6 +144,79 @@ function isPalindrome(str, left, right) {
         }
     }
     return true;
+}
+
+function testLegalRange() {
+    const n = 4;
+    const board = new Array(n);
+    for(let i = 0; i < n; i++) {
+        let a = new Array(n).fill('.');
+        board[i] = a;
+    }
+    board[0] = [1, 2, 3, 4];
+    // console.log(isValidLonelyNum(board, n, 1, 0, 1));
+    console.log(isValidLonelyNum(board, n, 1, 0, 2));
+    console.log(board);
+}
+
+// 以当前左边为中心的宫格范围
+function getLegalRange(n, row, col) {
+    const step = Math.sqrt(n);
+    const TYPE_MAP = {
+        iMin: 'iMin',
+        iMax: 'iMax',
+        jMin: 'jMin',
+        jMax: 'jMax'
+    }
+    const types = Object.keys(TYPE_MAP);
+    const rst = {};
+    let curType = null;
+    let index = null;
+    let count = null;
+    while(types.length) {
+        curType = types.pop();
+        switch(curType) {
+            case TYPE_MAP.iMin:
+                index = row;
+                count = step - 1;
+                while(count && index > 0) { // 有限的移动步长内，探索i的合法底线
+                    index --;
+                    count--;
+                }
+                rst[TYPE_MAP.iMin] = index;
+                break;
+            case TYPE_MAP.iMax:
+                index = row;
+                count = step - 1;
+                while(count && index < n - 1) {
+                    index++;
+                    count--;
+                }
+                rst[TYPE_MAP.iMax] = index;
+                break;
+            case TYPE_MAP.jMin:
+                index = col;
+                count = step - 1;
+                while(count && index > 0) {
+                    index--;
+                    count--;
+                }
+                rst[TYPE_MAP.jMin] = index;
+                break;
+            case TYPE_MAP.jMax:
+                index = col;
+                count = step - 1;
+                while(count && index < n - 1) {
+                    index++;
+                    count--;
+                }
+                rst[TYPE_MAP.jMax] = index;
+                break;
+            default:
+                break;
+        }
+    }
+    return rst;
 }
 
 // 排序相关工具
@@ -157,3 +231,6 @@ window.unionFindTest = unionFindTest;
 
 // 回文串相关工具
 window.isPalindrome = isPalindrome;
+
+// 回溯相关
+window.getLegalRange = getLegalRange;
