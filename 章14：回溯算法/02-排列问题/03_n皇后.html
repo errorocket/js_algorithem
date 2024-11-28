@@ -56,12 +56,12 @@
             });
             return !xCount && !yCount && !four_count;
         }
-        function four_dirs_count(chessboard, n, row, col) {
+        function four_dirs_count(chessboard, n, row, col) { // 统计当前坐标的斜方向上的所有坐标
             let DIR_MAP = {
-                leftUp: 'leftUp',
-                rightUp: 'rightUp',
-                rightDown: 'rightDown',
-                leftDown: 'leftDown',
+                leftUp: 'leftUp', // 左上
+                rightUp: 'rightUp', // 右上
+                rightDown: 'rightDown', // 右下
+                leftDown: 'leftDown', // 左下
             }
             let dirs = []; // 需要处理的方向
             if (row && col) {

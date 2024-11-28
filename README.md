@@ -1,2 +1,2 @@
-《javascript算法基本原理与代码实现》1 - 13章
-《代码随想录》14 - 16章 https://www.programmercarl.com
+- 《javascript算法基本原理与代码实现》1 - 13章
+- 《代码随想录》14 - 16章 https://www.programmercarl.com
