@@ -10,10 +10,10 @@
         /**
          * m * n: 数组规模 m *n
          * 移动规则：每次只能向右或向下移动1格
-         * 求：从起始位置(0 ,0)到右下角(m - 1, n - 1)有多少种不同的路径
+         * 求：从起始位置(0 ,0)到右下角(n - 1, m - 1)有多少种不同的路径
          */
         function countPath(m, n) {
-            const dp = new Array(m);
+            const dp = new Array(n);
             for(let i = 0; i < n; i++) {
                 let a = new Array(m);
                 dp[i] = a;
