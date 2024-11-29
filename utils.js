@@ -159,7 +159,7 @@ function testLegalRange() {
     console.log(board);
 }
 
-// 以当前左边为中心的宫格范围
+// 以当前坐标为中心的宫格范围
 function getLegalRange(n, row, col) {
     const step = Math.sqrt(n);
     const TYPE_MAP = {
