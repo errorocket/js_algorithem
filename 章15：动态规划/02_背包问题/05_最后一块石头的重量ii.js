@@ -24,7 +24,7 @@ function lastStone(stones) {
             dp[j] = Math.max(dp[j], dp[j - stones[i]] + stones[i] || 0);
         }
     }
-    // console.log(JSON.stringify(dp));
+    console.log(JSON.stringify(dp));
     target = Math.max(...dp); // 期望值的实际最大值
     const other = sum - target; // 另一堆
     return Math.abs(target - other);
