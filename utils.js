@@ -219,18 +219,17 @@ function getLegalRange(n, row, col) {
     return rst;
 }
 
-// 排序相关工具
-window.swap = swap;
-window.getTestData = getTestData;
-window.shakeData = shakeData;
-window.run = run;
-
-// 并查集相关工具
-window.UnionFind = UnionFind;
-window.unionFindTest = unionFindTest;
-
-// 回文串相关工具
-window.isPalindrome = isPalindrome;
-
-// 回溯相关
-window.getLegalRange = getLegalRange;
+module.exports =  {
+    // 排序相关工具
+    swap,
+    getTestData,
+    shakeData,
+    run,
+    // 并查集相关工具
+    UnionFind,
+    unionFindTest,
+    // 回文串相关工具
+    isPalindrome,
+    // 回溯相关
+    getLegalRange
+}
