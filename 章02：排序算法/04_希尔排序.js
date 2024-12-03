@@ -22,10 +22,10 @@ function shellSort(arr) {
         for(let g = 0; g < gap; g++) {
             let target = 0;
 
-            //  当前分组下的插入排序
+            //  当前分组下排序
             for(let i = g + gap; i < n; i += gap) {
-                target = arr[i];
-                let j = i - gap;
+                target = arr[i]; // 无序区取元素
+                let j = i - gap; // 当前分组下的左侧元素
                 while(j >= 0 && arr[j] > target) {
                     arr[j + gap] = arr[j];
                     j -= gap;
