@@ -49,7 +49,7 @@ class BitMapBase {
 // 测试类的功能
 function bitMapBaseTest() {
     // 获取测试数据: macbook air m1 13.5 / chrome:130.0.6723.117
-    const arr = [31, 2, 1, 7, 9, 0, 11, 32]; // 32bit(实际为64位，负数范围-证书范围)
+    const arr = [32, 2, 1, 7, 9, 0, 11, 31]; // 32bit(实际为64位，负数范围-正数范围)
     const bitMap = new BitMapBase(arr);
     console.log(bitMap.toNumArr());
 }
@@ -109,10 +109,10 @@ class BitMap {
             let modDataArr = [];
             if (bucketData) {
                 modDataArr = this.binaryToNumArr(bucketData)
+                modDataArr.forEach(modData => {
+                    ret.push(i * this.capacity + modData);
+                });
             }
-            modDataArr.forEach(modData => {
-                ret.push(i * this.capacity + modData);
-            });
         }
         return ret;
     }
@@ -133,3 +133,4 @@ function bitMapTest() {
     console.log(bitMap.isExist(16));
 }
 bitMapTest();
+// bitMapBaseTest();
