@@ -36,7 +36,7 @@ class UnionFind {
             this.arr[index1] = index2;
         } else {
             this.arr[index2] = index1;
-            // 更新当前组的深度
+            // 任选一个组的深度+1
             this.height[index1]++;
         }
         this.size--;

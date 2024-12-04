@@ -16,7 +16,8 @@ class UnionFind {
         // 上报所在组的最大编号: 实现快速合并
         while (el !== this.arr[el]) {
             this.searchCount++;
-            this.arr[el] = this.arr[this.arr[el]];
+            // 把后一步老大的位置折叠到当前位置
+            this.arr[el] = this.arr[this.arr[el]]; // 如果一样就到顶，不一样就继续折叠，往上找
             el = this.arr[el];
         }
         return el;
@@ -34,10 +35,10 @@ class UnionFind {
         if (this.weight[index1] > this.weight[index2]) {
             this.arr[index2] = index1;
             // 更新当前组的元素个数
-            this.weight[index1]++;
+            this.weight[index1] += this.weight[index2];
         } else {
             this.arr[index1] = index2;
-            this.weight[index2]++;
+            this.weight[index2] += this.weight[index1];
         }
         this.size--;
     }

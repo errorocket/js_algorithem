@@ -35,10 +35,10 @@ class UnionFind {
         if (this.weight[index1] > this.weight[index2]) {
             this.arr[index2] = index1;
             // 更新当前组的元素个数
-            this.weight[index1]++;
+            this.weight[index1] += this.weight[index2];
         } else {
             this.arr[index1] = index2;
-            this.weight[index2]++;
+            this.weight[index2] += this.weight[index1];
         }
         this.size--;
     }
