@@ -63,19 +63,19 @@ class Tree {
         let hasRight = false;
         node && stack.push(node);
         while (stack.length) {
-            while (node.left) {
+            while (node.left) { // 对当前节点首先做的事就是把左侧遍历完
                 stack.push(node.left);
                 node = node.left;
             }
             hasRight = false;
             // 当前节点无左侧节点
             while (stack.length && !hasRight) {
-                node = stack.pop();
+                node = stack.pop(); // 处理当前节点
                 cb(node);
-                if (node.right) {
+                if (node.right) { // 处理当前节点的右节点
                     stack.push(node.right);
                     hasRight = true;
-                    node = node.right;
+                    node = node.right; // 更换当前节点的指向
                 }
             }
         }
@@ -103,7 +103,7 @@ class Tree {
         let visited = false;
         node && stack.push(node);
         while (stack.length) {
-            node = stack[stack.length - 1]; // 未pop出，仅读取
+            node = stack[stack.length - 1]; // 未pop出，仅读取，当前节点的优先级相对于子节点是最低的
             if (!node.left && !node.right
                 || (visited && (visited === node.left || visited === node.right))
             ) {
@@ -290,19 +290,46 @@ class Tree {
             }
         }
     }
+    // 第k大的节点
+    kthNode(k) {
+        k = this.size - (k-1);
+        let index = 0;
+        let target = null;
+        const cb = node => {
+            index++;
+            if (index === k) {
+                target = node;
+                return true;
+            }
+        }
+        function find(node, cb) {
+            if (!node) return;
+            find(node.left, cb);
+            if (cb(node)) {
+                return;
+            }
+            find(node.right, cb);
+        }
+        find(this.root, cb);
+        return target;
+    }
 }
 
 function treeTest() {
     const arr = [11, 9, 4, 6, 5, 10, 15, 13, 12, 14, 16, 17];
     const tree = new Tree(arr);
     const cb = item => {
-        console.log(item);
+        console.log(item.data);
     }
 
+
     // 3种遍历时序（深度优先，非递归）
-    // tree.inOrder(cb);
+    tree.inOrder(cb);
     // tree.preOrder(cb);
     // tree.postOrder(cb);
+
+    // 获取第k大的节点
+    console.log('--> ', tree.kthNode(4).data);
 
     // 删除某些元素
     // tree.remove(9);
