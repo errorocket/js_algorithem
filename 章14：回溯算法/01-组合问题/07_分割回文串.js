@@ -1,4 +1,4 @@
-
+const {isPalindrome} = require('../../utils.js');
 /*
 * str: 字符串
 * 求：对字符串进行切割操作，求切割结果是回文串的所有切割方法
