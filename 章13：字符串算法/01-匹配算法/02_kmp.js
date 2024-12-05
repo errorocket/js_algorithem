@@ -19,7 +19,16 @@ class Kmp {
         }
         return j === lp ? (i - j) : -1;
     }
-    static getPMT(pattern) {
+    /**
+     * A
+     * AB
+     * ABC
+     * ABCD
+     * ABCDA
+     * ABCDAB
+     * ABCDABD
+     */
+    static getPMT(pattern) { // 部分匹配表
         const pmt = [0];
         const n = pattern.length;
         let i = 1; // 最长后缀子串的索引

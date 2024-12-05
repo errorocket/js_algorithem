@@ -1,7 +1,7 @@
 function midExpand(s) {
     if (!s.length) return;
     const c = ['^', '#', ...[...s.split('')].join('#'), '#', '$'];
-    let ret = 0;
+    let ret = 0; // 向左右扩展的步长，该步长等于原字符串中回文串的长度
     let max = -Infinity;
     let index = 0;
     for (let i = 1; i < c.length - 1; i++) {
